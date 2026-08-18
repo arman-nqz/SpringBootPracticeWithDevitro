@@ -22,13 +22,13 @@ public class JacksonTests {
         //at first turn book java object to a string then objectMapper turns it to a JSON string
         //and then put the JSON string in a String variable called result
         String result = objectMapper.writeValueAsString(book);
-        assertThat(result).isEqualTo("{\"isbn\":\"978-0-13-478627-5\",\"title\":\"The Enigma of Eternity\",\"author\":\"Aria Montgomery\",\"yearPublished\":\"2005\"}");
+        assertThat(result).isEqualTo("{\"isbn\":\"978-0-13-478627-5\",\"title\":\"The Enigma of Eternity\",\"author\":\"Aria Montgomery\",\"year\":\"2005\"}");
     }
 
     @Test
     public void testThatObjectMapperCanCreateJavaObjectFromJson(){
 
-        String json = "{\"isbn\":\"978-0-13-478627-5\",\"title\":\"The Enigma of Eternity\",\"author\":\"Aria Montgomery\",\"yearPublished\":\"2005\"}";
+        String json = "{\"isbn\":\"978-0-13-478627-5\",\"title\":\"The Enigma of Eternity\",\"author\":\"Aria Montgomery\",\"year\":\"2005\"}";
 
         final ObjectMapper objectMapper = new ObjectMapper();
         Book result = objectMapper.readValue(json, Book.class);
