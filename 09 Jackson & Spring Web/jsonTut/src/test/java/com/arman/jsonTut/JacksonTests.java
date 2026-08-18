@@ -3,6 +3,7 @@ package com.arman.jsonTut;
 import com.arman.jsonTut.domain.Book;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.exc.JsonNodeException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -26,12 +27,7 @@ public class JacksonTests {
     }
 
     @Test
-    public void testThatObjectMapperCanCreateJavaObjectFromJson(){
-
-        String json = "{\"isbn\":\"978-0-13-478627-5\",\"title\":\"The Enigma of Eternity\",\"author\":\"Aria Montgomery\",\"year\":\"2005\"}";
-
-        final ObjectMapper objectMapper = new ObjectMapper();
-        Book result = objectMapper.readValue(json, Book.class);
+    public void testThatObjectMapperCanCreateJavaObjectFromJsonObject() throws JsonNodeException {
 
         Book book = Book.builder()
                 .isbn("978-0-13-478627-5")
@@ -39,6 +35,12 @@ public class JacksonTests {
                 .author("Aria Montgomery")
                 .yearPublished("2005")
                 .build();
+
+        String json = "{\"foo\":\"bar\", \"isbn\":\"978-0-13-478627-5\",\"title\":\"The Enigma of Eternity\",\"author\":\"Aria Montgomery\",\"year\":\"2005\"}";
+
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        Book result = objectMapper.readValue(json, Book.class);
 
         assertThat(result).isEqualTo(book);
     }
