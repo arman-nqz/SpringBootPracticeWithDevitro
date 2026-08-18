@@ -1,0 +1,21 @@
+package com.armatech.jdbcTemplateTrain.services.impl;
+
+import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
+import com.armatech.jdbcTemplateTrain.repositories.AuthorRepository;
+import com.armatech.jdbcTemplateTrain.services.AuthorService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AuthorServiceImpl implements AuthorService {
+
+    private AuthorRepository authorRepository;
+
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    @Override
+    public AuthorEntity createAuthor(AuthorEntity authorEntity) {
+        return authorRepository.save(authorEntity);
+    }
+}
