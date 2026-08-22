@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthorDto {
+public class AuthorDto { //DTO is a data transfer object, it is the object exposed through REST API.
 
     private Long id;
 

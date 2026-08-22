@@ -5,7 +5,7 @@ import com.armatech.jdbcTemplateTrain.repositories.AuthorRepository;
 import com.armatech.jdbcTemplateTrain.services.AuthorService;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service //marks a class as business/service logic, makes the class a Spring bean
 public class AuthorServiceImpl implements AuthorService {
 
     private AuthorRepository authorRepository;

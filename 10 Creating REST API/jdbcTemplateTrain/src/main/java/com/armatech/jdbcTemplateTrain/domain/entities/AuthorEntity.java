@@ -7,13 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor //generates a constructor with all fields
+@NoArgsConstructor //generates an empty constructor
 @Builder
-@Entity
+@Entity //this a type of class that represent a row of database
 @Table(name = "authors")
 public class AuthorEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_seq")
     private Long id;

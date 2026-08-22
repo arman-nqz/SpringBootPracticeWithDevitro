@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 //job is data access
 @Repository
 public interface AuthorRepository extends CrudRepository<AuthorEntity, Long> {
+
     Iterable<AuthorEntity> ageLessThan(int age);
 
     @Query("SELECT a FROM AuthorEntity a WHERE a.age > ?1")

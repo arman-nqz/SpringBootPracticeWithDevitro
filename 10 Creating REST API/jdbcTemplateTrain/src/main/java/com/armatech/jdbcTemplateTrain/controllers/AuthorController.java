@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthorController {
 
-    private AuthorService authorService;
+    private AuthorService authorService; //This declares a field/reference variable that will store the AuthorService object passed into the constructor.
 
     private Mapper<AuthorEntity, AuthorDto> authorMapper;
 
+    //A constructor is a special method that runs when you create a new object from a class.
+    //constructor receives the objects this class depends on, so this class can use them.
+    //This says To create an AuthorController, I must provide an AuthorService object and a Mapper object.
     public AuthorController(AuthorService authorService, Mapper<AuthorEntity, AuthorDto> authorMapper) {
         this.authorService = authorService;
         this.authorMapper = authorMapper;

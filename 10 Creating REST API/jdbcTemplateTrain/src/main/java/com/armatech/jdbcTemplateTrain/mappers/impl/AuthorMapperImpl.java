@@ -15,7 +15,7 @@ public class AuthorMapperImpl implements Mapper<AuthorEntity, AuthorDto> {
         this.modelMapper = modelMapper;
     }
 
-    @Override
+    @Override //this method is intentionally replacing/implementing a method declared in a parent class or interface
     public AuthorDto mapTo(AuthorEntity authorEntity) {
         return modelMapper.map(authorEntity, AuthorDto.class);
     }
