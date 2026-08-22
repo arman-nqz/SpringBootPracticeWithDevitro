@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/08 database jdbc with hibernate.iml" filepath="$PROJECT_DIR$/.idea/08 database jdbc with hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jdbcTemplateTrain/jdbcTemplateTrain.iml" filepath="$PROJECT_DIR$/jdbcTemplateTrain/jdbcTemplateTrain.iml" />
     </modules>
   </component>
 </project>
