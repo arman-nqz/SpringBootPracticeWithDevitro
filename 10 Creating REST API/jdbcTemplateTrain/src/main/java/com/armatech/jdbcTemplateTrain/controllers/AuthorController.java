@@ -4,6 +4,8 @@ import com.armatech.jdbcTemplateTrain.domain.dto.AuthorDto;
 import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
 import com.armatech.jdbcTemplateTrain.mappers.Mapper;
 import com.armatech.jdbcTemplateTrain.services.AuthorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +31,10 @@ public class AuthorController {
     //create an API endpoint that accept author JSON convert it to an entity, save it, then returns the saved author as JSON
     //@PostMapping tells run this when an http post request calls to authors
     @PostMapping(path = "/authors")//this /authors is the endpoint
-    public AuthorDto createAuthor(@RequestBody AuthorDto author){//@RequestBody reads author send by client and turn it into AuthorDto
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author){//@RequestBody reads author send by client and turn it into AuthorDto
+        //ResponseEntity give us control over response
         AuthorEntity authorEntity = authorMapper.mapFrom(author); //convert AuthorDto to authorEntity
         AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity); //calls service layer to save/create author
-        return authorMapper.mapTo(savedAuthorEntity);//convert saved authorEntity back into authorDto and it is then returned as the http req
+        return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);//convert saved authorEntity back into authorDto and it is then returned as the http req
     }
 }
