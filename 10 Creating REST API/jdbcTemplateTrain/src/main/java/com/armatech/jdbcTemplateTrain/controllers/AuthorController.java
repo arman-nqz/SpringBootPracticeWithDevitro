@@ -6,9 +6,13 @@ import com.armatech.jdbcTemplateTrain.mappers.Mapper;
 import com.armatech.jdbcTemplateTrain.services.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 //The controller receives requests from outside world and return responses
 //receive the http req -> extract info from it -> calls service layer to perform business logic -> return result as http
@@ -36,5 +40,13 @@ public class AuthorController {
         AuthorEntity authorEntity = authorMapper.mapFrom(author); //convert AuthorDto to authorEntity
         AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity); //calls service layer to save/create author
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);//convert saved authorEntity back into authorDto and it is then returned as the http req
+    }
+
+    @GetMapping(path = "/authors")
+    public List<AuthorDto> listAuthors(){
+        List<AuthorEntity> authors = authorService.findAll();
+        return authors.stream()
+                .map(authorMapper::mapTo)
+                .collect(Collectors.toList());
     }
 }
