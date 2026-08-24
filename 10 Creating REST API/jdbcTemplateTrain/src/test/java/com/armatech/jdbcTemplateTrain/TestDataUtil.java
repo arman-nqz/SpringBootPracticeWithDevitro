@@ -1,5 +1,7 @@
 package com.armatech.jdbcTemplateTrain;
 
+import com.armatech.jdbcTemplateTrain.domain.dto.AuthorDto;
+import com.armatech.jdbcTemplateTrain.domain.dto.BookDto;
 import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
 import com.armatech.jdbcTemplateTrain.domain.entities.BookEntity;
 
@@ -31,11 +33,18 @@ public final class TestDataUtil {
                 .build();
     }
 
-    public static BookEntity createTestBookA(final AuthorEntity authorEntity) {
+    public static BookEntity createTestBookEntityA(final AuthorEntity authorEntity) {
         return BookEntity.builder()
                 .isbn("978-1-2345-6789-0")
                 .title("The Shadow in the Attic")
                 .authorEntity(authorEntity)
+                .build();
+    }
+    public static BookDto createTestBookDtoA(final AuthorDto author) {
+        return BookDto.builder()
+                .isbn("978-1-2345-6789-0")
+                .title("The Shadow in the Attic")
+                .author(author)
                 .build();
     }
 
