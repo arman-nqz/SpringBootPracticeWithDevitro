@@ -4,7 +4,9 @@ import com.armatech.jdbcTemplateTrain.domain.dto.BookDto;
 import com.armatech.jdbcTemplateTrain.domain.entities.BookEntity;
 import com.armatech.jdbcTemplateTrain.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookMapperImpl implements Mapper<BookEntity, BookDto> {
 
     private ModelMapper modelMapper;
