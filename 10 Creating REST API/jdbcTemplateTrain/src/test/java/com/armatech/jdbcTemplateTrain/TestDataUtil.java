@@ -9,25 +9,25 @@ public final class TestDataUtil {
     private TestDataUtil() {}
 
 
-    public static AuthorEntity createTestAuthorA() {
+    public static AuthorEntity createTestAuthorEntityA() {
         return AuthorEntity.builder()
-                .id(1L)
+                .id(null)
                 .name("Abigail Rose")
                 .age(80)
                 .build();
     }
 
-    public static AuthorEntity createTestAuthorB() {
+    public static AuthorEntity createTestAuthorEntityB() {
         return AuthorEntity.builder()
-                .id(2L)
+                .id(null)
                 .name("Thomas Cronin")
                 .age(44)
                 .build();
     }
 
-    public static AuthorEntity createTestAuthorC() {
+    public static AuthorEntity createTestAuthorEntityC() {
         return AuthorEntity.builder()
-                .id(3L)
+                .id(null)
                 .name("Jesse A Casey")
                 .age(24)
                 .build();
