@@ -2,6 +2,7 @@ package com.armatech.jdbcTemplateTrain.controllers;
 
 import com.armatech.jdbcTemplateTrain.TestDataUtil;
 import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
+import com.armatech.jdbcTemplateTrain.domain.entities.BookEntity;
 import com.armatech.jdbcTemplateTrain.repositories.AuthorRepository;
 import com.armatech.jdbcTemplateTrain.services.AuthorService;
 import org.junit.jupiter.api.Test;
@@ -93,6 +94,42 @@ public class AuthorControllerIntegrationTest {
                 MockMvcResultMatchers.jsonPath("$[0].name").value("Abigail Rose")
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].age").value(80)
+        );
+    }
+
+    @Test
+    public void testThatGetAuthorByIdReturnsHttpStatus200Ok() throws Exception {
+        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
+        authorService.createAuthor(testAuthorEntityA);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatGetAuthorByIdReturnsHttpStatus404NotFound() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatGetAuthorByIdReturnsAuthorWhenAuthorExist() throws Exception {
+        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
+        authorService.createAuthor(testAuthorEntityA);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(1)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.name").value("Abigail Rose")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.age").value(80)
         );
     }
 }
