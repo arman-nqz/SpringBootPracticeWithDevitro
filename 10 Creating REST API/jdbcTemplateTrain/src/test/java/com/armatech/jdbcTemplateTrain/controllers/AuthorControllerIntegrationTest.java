@@ -2,8 +2,6 @@ package com.armatech.jdbcTemplateTrain.controllers;
 
 import com.armatech.jdbcTemplateTrain.TestDataUtil;
 import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
-import com.armatech.jdbcTemplateTrain.domain.entities.BookEntity;
-import com.armatech.jdbcTemplateTrain.repositories.AuthorRepository;
 import com.armatech.jdbcTemplateTrain.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,7 +81,7 @@ public class AuthorControllerIntegrationTest {
     @Test
     public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
-        authorService.createAuthor(testAuthorEntityA);
+        authorService.save(testAuthorEntityA);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/authors")
@@ -100,7 +98,7 @@ public class AuthorControllerIntegrationTest {
     @Test
     public void testThatGetAuthorByIdReturnsHttpStatus200Ok() throws Exception {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
-        authorService.createAuthor(testAuthorEntityA);
+        authorService.save(testAuthorEntityA);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/authors/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -120,7 +118,7 @@ public class AuthorControllerIntegrationTest {
     @Test
     public void testThatGetAuthorByIdReturnsAuthorWhenAuthorExist() throws Exception {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
-        authorService.createAuthor(testAuthorEntityA);
+        authorService.save(testAuthorEntityA);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/authors/1")
                         .contentType(MediaType.APPLICATION_JSON)

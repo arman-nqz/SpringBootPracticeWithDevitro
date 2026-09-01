@@ -36,7 +36,7 @@ public class AuthorController {
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author){//@RequestBody reads author send by client and turn it into AuthorDto
         //ResponseEntity give us control over response
         AuthorEntity authorEntity = authorMapper.mapFrom(author); //convert AuthorDto to authorEntity
-        AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity); //calls service layer to save/create author
+        AuthorEntity savedAuthorEntity = authorService.save(authorEntity); //calls service layer to save/create author
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);//convert saved authorEntity back into authorDto and it is then returned as the http req
     }
 
@@ -55,5 +55,21 @@ public class AuthorController {
             AuthorDto authorDto = authorMapper.mapTo(authorEntity);
             return new ResponseEntity<>(authorDto, HttpStatus.OK);//returns inside lamba not method
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping(path = "/authors/{id}")
+    public ResponseEntity<AuthorDto> fullUpdateAuthor(
+            @PathVariable("id") Long id,
+            @RequestBody AuthorDto authorDto){
+        if(!authorService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        authorDto.setId(id);
+        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
+        return new ResponseEntity<>(
+                authorMapper.mapTo(savedAuthorEntity),
+                HttpStatus.OK);
     }
 }
