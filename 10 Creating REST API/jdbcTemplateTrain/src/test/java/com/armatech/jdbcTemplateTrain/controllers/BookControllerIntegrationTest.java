@@ -36,7 +36,7 @@ public class BookControllerIntegrationTest {
     }
 
     @Test
-    public void testThatCreateBookReturnsHttpStatus201Created() throws Exception {
+    public void testThatCreateUpdateBookReturnsHttpStatus201Created() throws Exception {
         BookDto bookDto = TestDataUtil.createTestBookDtoA(null);
         String createBookJson = objectMapper.writeValueAsString(bookDto);
 

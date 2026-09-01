@@ -25,7 +25,7 @@ public class BookController {
     }
 
     @PutMapping("/books/{isbn}") //PUT differ from POST in adding with specification
-    public ResponseEntity<BookDto> createBook(
+    public ResponseEntity<BookDto> createUpdateBook(
             @PathVariable("isbn") String isbn,
             @RequestBody BookDto bookDto) {
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
