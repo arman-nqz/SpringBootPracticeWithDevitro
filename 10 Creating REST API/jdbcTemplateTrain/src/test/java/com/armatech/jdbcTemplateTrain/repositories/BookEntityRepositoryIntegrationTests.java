@@ -32,29 +32,29 @@ public class BookEntityRepositoryIntegrationTests {
 
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
         BookEntity bookEntity = TestDataUtil.createTestBookEntityA(authorEntity);
-        underTest.save(bookEntity);
+        BookEntity savedBookEntity = underTest.save(bookEntity);
 
         Optional<BookEntity> result = underTest.findById(bookEntity.getIsbn());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(bookEntity);
+        assertThat(result.get()).isEqualTo(savedBookEntity);
     }
 
     @Test
     public void testThatMultipleBooksCanBeCreatedAndRecalled() {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
         BookEntity bookEntityA = TestDataUtil.createTestBookEntityA(authorEntity);
-        underTest.save(bookEntityA);
+        BookEntity savedBookEntityA = underTest.save(bookEntityA);
 
         BookEntity bookEntityB = TestDataUtil.createTestBookB(authorEntity);
-        underTest.save(bookEntityB);
+        BookEntity savedBookEntityB = underTest.save(bookEntityB);
 
         BookEntity bookEntityC = TestDataUtil.createTestBookC(authorEntity);
-        underTest.save(bookEntityC);
+        BookEntity savedBookEntityC = underTest.save(bookEntityC);
 
         Iterable<BookEntity> result = underTest.findAll();
         assertThat(result)
                 .hasSize(3)
-                .containsExactly(bookEntityA, bookEntityB, bookEntityC);
+                .containsExactly(savedBookEntityA, savedBookEntityB, savedBookEntityC);
     }
 
     @Test
@@ -62,14 +62,14 @@ public class BookEntityRepositoryIntegrationTests {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
 
         BookEntity bookEntityA = TestDataUtil.createTestBookEntityA(authorEntity);
-        underTest.save(bookEntityA);
+        BookEntity savedBookEntityA = underTest.save(bookEntityA);
 
-        bookEntityA.setTitle("UPDATED");
-        underTest.save(bookEntityA);
+        savedBookEntityA.setTitle("UPDATED");
+        BookEntity updatedBookEntityA = underTest.save(savedBookEntityA);
 
-        Optional<BookEntity> result = underTest.findById(bookEntityA.getIsbn());
+        Optional<BookEntity> result = underTest.findById(updatedBookEntityA.getIsbn());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(bookEntityA);
+        assertThat(result.get()).isEqualTo(updatedBookEntityA);
 
     }
 
