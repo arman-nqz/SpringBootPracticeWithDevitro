@@ -68,6 +68,33 @@ public class BookControllerIntegrationTest {
     }
 
     @Test
+    public void testThatPutBookPersistsAndReturnsNestedAuthor() throws Exception {
+        BookDto bookDto = BookDto.builder()
+                .isbn("111-1-2345-6789-5")
+                .title("The Shadow in the Balcony")
+                .author(AuthorDto.builder().name("Fred The Author").age(14).build())
+                .build();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/books/" + bookDto.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(bookDto))
+        ).andExpect(
+                MockMvcResultMatchers.status().isCreated()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.author.name").value("Fred The Author")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.author.age").value(14)
+        );
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Fred The Author"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/" + bookDto.getIsbn()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.author.name").value("Fred The Author"));
+    }
+
+    @Test
     public void testThatListBooksReturnsHttpStatus200Ok() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books")
