@@ -1,7 +1,9 @@
 package com.armatech.jdbcTemplateTrain.controllers;
 
 import com.armatech.jdbcTemplateTrain.TestDataUtil;
+import com.armatech.jdbcTemplateTrain.domain.dto.AuthorDto;
 import com.armatech.jdbcTemplateTrain.domain.dto.BookDto;
+import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
 import com.armatech.jdbcTemplateTrain.domain.entities.BookEntity;
 import com.armatech.jdbcTemplateTrain.services.BookService;
 import org.junit.jupiter.api.Test;
@@ -145,6 +147,44 @@ public class BookControllerIntegrationTest {
                         .content(bookJson)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.isbn").value("978-1-2345-6789-0")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.title").value("UPDATED")
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateBookReturnsHttpStatus200Ok() throws Exception {
+        BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
+        bookService.createUpdateBook(testBookEntityA.getIsbn(), testBookEntityA);
+
+        BookDto testBookDtoA = TestDataUtil.createTestBookDtoA(null);
+        testBookDtoA.setTitle("UPDATED");
+        String bookJson = objectMapper.writeValueAsString(testBookDtoA);
+
+        mockMvc.perform(
+          MockMvcRequestBuilders.patch("/books/" + testBookEntityA.getIsbn())
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(bookJson)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateBookReturnsUpdatedBook() throws Exception {
+        BookEntity savedTestEntityBookA = TestDataUtil.createTestBookEntityA(null);
+        bookService.createUpdateBook(savedTestEntityBookA.getIsbn(), savedTestEntityBookA);
+
+        BookDto testBookDtoA = TestDataUtil.createTestBookDtoA(null);
+        testBookDtoA.setTitle("UPDATED");
+        String testBookAJson = objectMapper.writeValueAsString(testBookDtoA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/books/" + savedTestEntityBookA.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testBookAJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.isbn").value(savedTestEntityBookA.getIsbn())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.title").value("UPDATED")
         );
