@@ -2,6 +2,7 @@ package com.armatech.jdbcTemplateTrain.repositories;
 
 import com.armatech.jdbcTemplateTrain.TestDataUtil;
 import com.armatech.jdbcTemplateTrain.domain.entities.AuthorEntity;
+import com.armatech.jdbcTemplateTrain.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AuthorEntityRepositoryIntegrationTests {
 
     private AuthorRepository underTest;
+    @Autowired
+    private AuthorService authorService;
 
     @Autowired
     public AuthorEntityRepositoryIntegrationTests(AuthorRepository underTest) {
