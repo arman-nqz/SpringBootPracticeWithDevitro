@@ -21,5 +21,5 @@ public class BookEntity {
 
     @ManyToOne(cascade = CascadeType.ALL) //This means if we get a book we get the authorEntity too and if we change the authorEntity changes apply here too
     @JoinColumn(name = "author_id")
-    private AuthorEntity authorEntity;
+    private AuthorEntity author;
 }
